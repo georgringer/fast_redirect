@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2016-07-11T20:47:10Z"
+          product-name="fast_redirect">
+        <header/>
+        <body>
+            <trans-unit id="tx_fast_redirect_entry" xml:space="preserve">
+				<source>Redirect item</source>
+			</trans-unit>
+			<trans-unit id="tx_fast_redirect_entry.url_from" xml:space="preserve">
+				<source>Url from</source>
+			</trans-unit>
+			<trans-unit id="tx_fast_redirect_entry.url_to" xml:space="preserve">
+				<source>Url to</source>
+			</trans-unit>
+			<trans-unit id="tx_fast_redirect_entry.status_code" xml:space="preserve">
+				<source>Status code</source>
+			</trans-unit>
+			<trans-unit id="tx_fast_redirect_entry.status_code.301" xml:space="preserve">
+				<source>301 (Permanent redirect)</source>
+			</trans-unit>
+			<trans-unit id="tx_fast_redirect_entry.status_code.307" xml:space="preserve">
+				<source>307 (Temporary redirect)</source>
+			</trans-unit>
+			<trans-unit id="extMgm.fallbackHandling" xml:space="preserve">
+				<source>Fallback Handling:Use the same syntax as in "[FE][pageNotFound_handling]" which you can see in the Install Tool</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

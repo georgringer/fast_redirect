@@ -1,0 +1,3 @@
+
+# cat=general/enable/1; type=string; label=LLL:EXT:fast_redirect/Resources/Private/Language/locallang.xlf:extMgm.fallbackHandling
+fallbackHandling = 1
