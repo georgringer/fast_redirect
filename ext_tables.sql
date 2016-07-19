@@ -9,4 +9,4 @@ CREATE TABLE tx_fast_redirect_entry (
 
   PRIMARY KEY (uid),
   KEY parent (pid)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
