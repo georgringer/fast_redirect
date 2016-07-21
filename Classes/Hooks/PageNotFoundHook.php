@@ -35,10 +35,7 @@ class PageNotFoundHook
 
         $url = ltrim($url, '/');
         $result = $this->matchUrl($url);
-        if (empty($result)) {
-            // try again - maybe trailing slash was added automatically (realurl)
-            $result = $this->matchUrl(rtrim($url, '/'));
-        }
+
         if (!empty($result)) {
             HttpUtility::redirect($result['redirectUrl'], $result['statusCode']);
         }
@@ -49,13 +46,16 @@ class PageNotFoundHook
      * @return array - redirectUrl, statusCode
      */
     protected function matchUrl($url) {
+
         $table = 'tx_fast_redirect_entry';
         $retarr = array();
         $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
           'url_to,status_code',
           $table,
-          'url_from=' . $this->getDatabaseConnection()->fullQuoteStr($url, $table)
+          'url_from=' . $this->getDatabaseConnection()->fullQuoteStr($url, $table) . ' OR url_from= ' .$this->getDatabaseConnection()->fullQuoteStr(rtrim($url, '/'), $table)
         );
+
+      echo $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
         if (!empty($row)) {
             $retarr['statusCode'] = constant(HttpUtility::class . '::HTTP_STATUS_' . $row['status_code']);
             $retarr['redirectUrl'] = $this->generateValideUrl($row['url_to']);
