@@ -55,7 +55,6 @@ class PageNotFoundHook
           'url_from=' . $this->getDatabaseConnection()->fullQuoteStr($url, $table) . ' OR url_from= ' .$this->getDatabaseConnection()->fullQuoteStr(rtrim($url, '/'), $table)
         );
 
-      echo $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
         if (!empty($row)) {
             $retarr['statusCode'] = constant(HttpUtility::class . '::HTTP_STATUS_' . $row['status_code']);
             $retarr['redirectUrl'] = $this->generateValideUrl($row['url_to']);
