@@ -31,8 +31,8 @@ return [
             'label' => $ll . 'tx_fast_redirect_entry.url_to',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'required,unique,trim',
+                'size' => 30, 
+                'eval' => 'required,trim',
             ]
         ],
         'status_code' => [
