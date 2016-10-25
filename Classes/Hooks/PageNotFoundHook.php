@@ -23,7 +23,6 @@ class PageNotFoundHook
     public function pageNotFound(array $params)
     {
         $this->handleRedirect($params['currentUrl']);
-
         $fallbackHandling = $this->extensionConfiguration->getFallbackHandling();
         $this->getTsfe()->pageErrorHandler($fallbackHandling);
     }
@@ -33,21 +32,36 @@ class PageNotFoundHook
      */
     protected function handleRedirect($url)
     {
-        $table = 'tx_fast_redirect_entry';
-        $url = ltrim($url, '/');
-        $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-            'url_to,status_code',
-            $table,
-            'url_from=' . $this->getDatabaseConnection()->fullQuoteStr($url, $table)
-        );
-        if (!empty($row)) {
-            $statusCode = constant(HttpUtility::class . '::HTTP_STATUS_' . $row['status_code']);
 
-            $redirectUrl = $this->generateValideUrl($row['url_to']);
-            HttpUtility::redirect($redirectUrl, $statusCode);
+        $url = ltrim($url, '/');
+        $result = $this->matchUrl($url);
+
+        if (!empty($result)) {
+            HttpUtility::redirect($result['redirectUrl'], $result['statusCode']);
         }
     }
 
+    /**
+     * @param $url
+     * @return array - redirectUrl, statusCode
+     */
+    protected function matchUrl($url) {
+
+        $table = 'tx_fast_redirect_entry';
+        $retarr = array();
+        $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
+          'url_to,status_code',
+          $table,
+          'url_from=' . $this->getDatabaseConnection()->fullQuoteStr($url, $table) . ' OR url_from= ' .$this->getDatabaseConnection()->fullQuoteStr(rtrim($url, '/'), $table)
+        );
+
+        if (!empty($row)) {
+            $retarr['statusCode'] = constant(HttpUtility::class . '::HTTP_STATUS_' . $row['status_code']);
+            $retarr['redirectUrl'] = $this->generateValideUrl($row['url_to']);
+        }
+        return $retarr;
+    }
+ 
     /**
      * If domain is not included, prepend current one
      *
